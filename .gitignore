@@ -1,0 +1,8 @@
+.bundle
+.DS_Store
+Capfile
+db/*.sqlite3
+log/*.log
+config/settings
+config/database.yml
+tmp/**/*

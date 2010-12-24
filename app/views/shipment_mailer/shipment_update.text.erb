@@ -1,0 +1,11 @@
+<%= @shipment.name %>
+<%= @shipment.tracking_number %>
+-----------------------------------------------------
+From: <%= @shipment.origin_city %>, <%= @shipment.origin_state %> <%= @shipment.origin_country %>
+To: <%= @shipment.destination_city %>, <%= @shipment.destination_state %> <%= @shipment.destination_country %>
+-----------------------------------------------------
+<% @shipment.events.each do |event| %>
+  <%= event.name %>
+  <%= event.city %>, <%= event.state %> <%= event.postal_code %>
+  <%= event.occurred_at %>
+<% end %>  
