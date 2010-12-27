@@ -6,9 +6,8 @@ gem 'rails', '3.0.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'delayed_job'
 gem 'nokogiri'
-gem 'shippinglogic'
+gem 'shippinglogic', :git => "https://github.com/jkeen/shippinglogic.git"
 gem 'rufus-scheduler'
 gem 'settingslogic'
 gem 'mail'

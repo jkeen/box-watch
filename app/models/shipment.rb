@@ -1,7 +1,7 @@
 class Shipment < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   belongs_to :incoming_mail
-  
+  serialize :last_response
   validates_presence_of :tracking_number, :service
   validates_uniqueness_of :tracking_number, :scope => [:incoming_mail_id, :service]
   
@@ -27,8 +27,7 @@ class Shipment < ActiveRecord::Base
   end
     
   def update_tracking_info!
-    carrier = shipping_service
-    tracking = carrier.track(:tracking_number => tracking_number)
+    tracking = shipping_service.track(:tracking_number => tracking_number)    
     if (tracking.valid?)
       self.service_type        = tracking.service_type
       self.origin_city         = tracking.origin_city
@@ -49,13 +48,19 @@ class Shipment < ActiveRecord::Base
           e.state       = event.state
           e.postal_code = event.postal_code
           e.country     = event.country
-          e.occurred_at = event.occured_at # [SIC]
+          e.occurred_at = event.occurred_at
           e.save
         end
       end    
       save
     else
-      logger.info "Tracking number #{tracking_number} invalid for #{carrier}"
+      self.update_attributes(:last_error => tracking.response)
+      
+      if tracking.errors =~ /Invalid tracking number/
+        logger.info "Tracking number #{tracking_number} invalid for #{carrier}"
+      else
+        logger.info "Error while trying to get tracking information: #{tracking.errors}"
+      end
     end
     rescue Exception
       return false
