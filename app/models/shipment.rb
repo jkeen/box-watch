@@ -27,7 +27,7 @@ class Shipment < ActiveRecord::Base
   end
     
   def update_tracking_info!
-    tracking = shipping_service.track(:tracking_number => tracking_number)    
+    tracking = self.shipping_service.track(:tracking_number => tracking_number)    
     if (tracking.valid?)
       self.service_type        = tracking.service_type
       self.origin_city         = tracking.origin_city
@@ -62,7 +62,9 @@ class Shipment < ActiveRecord::Base
         logger.info "Error while trying to get tracking information: #{tracking.errors}"
       end
     end
-    rescue Exception
+    rescue Exception => e
+      logger.info e.message
+      logger.info e.backtrace.join("\n")
       return false
   end
   
