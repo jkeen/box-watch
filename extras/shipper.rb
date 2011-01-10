@@ -2,7 +2,6 @@ class Shipper
   def self.fedex
     settings = ShippingSettings.fedex
     @shipper = Shippinglogic::FedEx.new(settings.key, settings.password, settings.account, settings.meter, :test => settings.test)
-    self
   end
   
   def self.ups

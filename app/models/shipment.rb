@@ -29,15 +29,17 @@ class Shipment < ActiveRecord::Base
   def update_tracking_info!
     tracking = self.shipping_service.track(:tracking_number => tracking_number)    
     if (tracking.valid?)
-      self.service_type        = tracking.service_type
-      self.origin_city         = tracking.origin_city
-      self.origin_state        = tracking.origin_state
-      self.origin_country      = tracking.origin_country
-      self.destination_city    = tracking.destination_city
-      self.destination_state   = tracking.destination_state
-      self.destination_country = tracking.destination_country
+      self.service_type        = tracking.try(:service_type)
+      self.origin_city         = tracking.try(:origin_city)
+      self.origin_state        = tracking.try(:origin_state)
+      self.origin_country      = tracking.try(:origin_country)
+      self.destination_city    = tracking.try(:destination_city)
+      self.destination_state   = tracking.try(:destination_state)
+      self.destination_country = tracking.try(:destination_country)
       self.last_checked_at     = Time.now
-      self.delivery_at         = tracking.delivery_at
+      
+      
+      self.delivery_at         = tracking.try(:delivery_at)
     
       tracking.events.each do |event|
         e = self.events.find_or_initialize_by_name(event.name)
@@ -48,7 +50,9 @@ class Shipment < ActiveRecord::Base
           e.state       = event.state
           e.postal_code = event.postal_code
           e.country     = event.country
-          e.occurred_at = event.occurred_at
+          e.event_time  = event.try(:event_time)
+          e.event_date  = event.try(:event_date)
+          e.occurred_at = event.try(:occurred_at)
           e.save
         end
       end    
@@ -83,6 +87,9 @@ class Shipment < ActiveRecord::Base
       when "ups"
         settings = ShippingSettings.ups
         Shippinglogic::UPS.new(settings.key, settings.password, settings.account, :test => settings.test)
+      when "usps"
+        settings = ShippingSettings.usps
+        Shippinglogic::UPS.new(settings.username, settings.password, :test => settings.test)  
       else
         raise "Shipper could not be identified or is not supported"  
     end
