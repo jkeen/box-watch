@@ -5,6 +5,6 @@ class ShipmentMailer < ActionMailer::Base
     @shipment = shipment
     to = shipment.incoming_mail.from
     logger.info "preparing shipment update to #{to} for shipment #{shipment.id} / #{shipment.tracking_number}"
-    mail(:to => to, :subject => shipment.name)
+    mail(:to => to, :subject => [shipment.status, shipment.name].compact.join("—"))
   end
 end

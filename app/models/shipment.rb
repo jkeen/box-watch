@@ -22,6 +22,12 @@ class Shipment < ActiveRecord::Base
     return self.incoming_mail.subject if self.incoming_mail
   end
   
+  def status
+    if self.events
+      self.events.last.name
+    end
+  end
+  
   def found?
     !!last_checked_at
   end
@@ -37,7 +43,6 @@ class Shipment < ActiveRecord::Base
       self.destination_state   = tracking.try(:destination_state)
       self.destination_country = tracking.try(:destination_country)
       self.last_checked_at     = Time.now
-      
       
       self.delivery_at         = tracking.try(:delivery_at)
     
