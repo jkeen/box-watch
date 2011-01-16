@@ -3,11 +3,7 @@ class IncomingMail < ActiveRecord::Base
   scope :unprocessed, where(["processed_at = ?", nil])
   scope :unmatched, where(["id not in (select incoming_mail_id from shipments)"])
   
-  after_create do
-    Schedule.task.in '5s' do
-      process
-    end
-  end
+  after_create :process
   
   def process
     matches = TrackingNumber.search(body)
