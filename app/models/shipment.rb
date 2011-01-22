@@ -2,8 +2,11 @@ class Shipment < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   belongs_to :incoming_mail
   serialize :last_response
-  validates_presence_of :tracking_number, :service
-  validates_uniqueness_of :tracking_number, :scope => [:incoming_mail_id, :service]
+  validates_presence_of :tracking_number
+  validates_uniqueness_of :tracking_number, :scope => [:incoming_mail_id]
+  validates_each :tracking_number do |model, attr, value|
+    model.errors.add(attr, 'tracking number is not recognized') unless TrackingNumber.new(value).valid?
+  end
   
   scope :in_transit, lambda { where("delivery_at != ?", nil) }
   scope :needs_update, lambda { where("last_checked_at < ? OR last_checked_at is null", 5.minutes.ago) }
@@ -11,6 +14,10 @@ class Shipment < ActiveRecord::Base
     where("id IN (SELECT shipment_id from events where events.notified_at is null)")
   }
   
+  before_create do
+    self.service = TrackingNumber.new(self.tracking_number).carrier.to_s
+  end
+    
   after_create do
     Schedule.task.in '5s' do
       update_tracking_info!

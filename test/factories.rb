@@ -6,7 +6,7 @@ Factory.define :incoming_mail do |u|
   u.sent_at DateTime.now
 end
 
-Factory.define :shipment do |u|  
+Factory.define :ups_shipment, :class => Shipment do |u|  
   u.service "ups"
   u.tracking_number "1Z5R89390357567127"
   u.service_type "GROUND"
@@ -20,4 +20,7 @@ Factory.define :shipment do |u|
   u.delivery_at DateTime.parse("Thu Dec 23 01:19:00 UTC 2010")
   u.last_error nil
   u.association :incoming_mail
+end
+
+Factory.define :shipment do |u|
 end
