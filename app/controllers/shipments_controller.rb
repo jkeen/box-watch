@@ -1,7 +1,21 @@
 class ShipmentsController < ApplicationController
   before_filter :find_shipment
+
+  def show
+  end
   
-  def show  
+  def new
+    @shipment = Shipment.new
+  end
+  
+  def create
+    @shipment = Shipment.new(:tracking_number => params[:shipment][:tracking_number])
+    
+    if @shipment.save
+      redirect_to @shipment
+    else
+      render :action => "new"
+    end
   end
   
   private

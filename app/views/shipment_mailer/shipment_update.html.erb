@@ -1,20 +1,8 @@
-<%= @shipment.name %>
-<%= @shipment.tracking_number %>
-
-<ul class="where">
-  <li>
-    From: <%= @shipment.origin_city %>, <%= @shipment.origin_state %> <%= @shipment.origin_country %>
-  </li>
-  <li>
-    To: <%= @shipment.destination_city %>, <%= @shipment.destination_state %> <%= @shipment.destination_country %>
-  </li>
-</ul>
-<ul class="events">
-  <% @shipment.events.each do |event| %>
-    <li>
-      <p><%= event.name %></p>
-      <p><%= event.city %>, <%= event.state %> <%= event.postal_code %></p>
-      <p><%= event.occurred_at %></p>
-    </li>
-  <% end %>  
-</ul>
+<div class="body">
+  <style type="text/css" media="screen">
+    h3 { color: #f00; }
+    ul { list-style: none; }
+  </style>
+  
+  <%= render :partial => "/shipments/status" %>
+</div>

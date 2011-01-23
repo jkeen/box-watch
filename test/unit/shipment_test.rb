@@ -16,4 +16,9 @@ class ShipmentTest < ActiveSupport::TestCase
     shipment = Factory.create(:shipment, :tracking_number => "9611020987654312345672")
     assert_equal "fedex", shipment.service
   end
+  
+  test "creating invalid shipment does not validate" do
+    shipment = Factory.build(:shipment, :tracking_number => "9611020987654312345")
+    assert !shipment.valid?
+  end
 end
