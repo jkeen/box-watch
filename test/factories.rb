@@ -31,6 +31,19 @@ Factory.define :usps_shipment, :class => Shipment do |u|
   u.association :incoming_mail
 end
 
+Factory.define :fedex_shipment, :class => Shipment do |u|  
+  u.service "fedex"
+  u.tracking_number "986578788855"
+  u.last_checked_at DateTime.parse("Mon Jan 03 02:06:18 UTC 2011")
+  u.delivery_at DateTime.parse("Thu Dec 23 01:19:00 UTC 2010")
+  u.last_error nil
+  u.association :incoming_mail
+end
+
 
 Factory.define :shipment do |u|
+end
+
+Factory.define :event do |e|
+  e.association :shipment
 end

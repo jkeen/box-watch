@@ -3,6 +3,10 @@ require 'rufus/scheduler'
 
 scheduler = Schedule.task
 
+def scheduler.handle_exception(job, exception)
+  puts "job #{job.job_id} caught exception '#{exception}'"
+end
+
 scheduler.every("5m") do
    Shipment.needs_update.each(&:update_tracking_info!)
 end

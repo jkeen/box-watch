@@ -11,7 +11,7 @@ class Shipper
   
   def self.usps
     settings = ShippingSettings.usps
-    @shipper = Shippinglogic::USPS.new(settings.username, settings.password, :test => settings.test)
+    @shipper = Shippinglogic::USPS.new(settings.username, settings.password, :test => settings.test, :secure => false)
   end
   
   def self.track(tracking_number)
