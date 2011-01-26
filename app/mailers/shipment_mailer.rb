@@ -1,4 +1,5 @@
 class ShipmentMailer < ActionMailer::Base
+  helper :shipments
   default :from => "track@keen.me"
   
   def shipment_update(shipment)

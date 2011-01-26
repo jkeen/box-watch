@@ -40,23 +40,26 @@ class Shipment < ActiveRecord::Base
   end
     
   def update_tracking_info!
-    tracking = self.shipping_service.track(:tracking_number => tracking_number)    
+    tracking = tracking_info 
     if (tracking.valid?)
-      self.service_type        = tracking.service_type if tracking.respond_to?(:service_type)
-      self.origin_city         = tracking.origin_city if tracking.respond_to?(:origin_city)
-      self.origin_state        = tracking.origin_state if tracking.respond_to?(:origin_state)
-      self.origin_country      = tracking.origin_country if tracking.respond_to?(:origin_country)
-      self.destination_city    = tracking.destination_city if tracking.respond_to?(:destination_city)
-      self.destination_state   = tracking.destination_state if tracking.respond_to?(:destination_state)
-      self.destination_country = tracking.destination_country if tracking.respond_to?(:destination_country)
+      # this instance_variable_get stuff below is pretty wacky, but it's due to some craziness 
+      # with the proxy patterned shippinglogic that I can't seem to track down
+      
+      self.service_type        = tracking.instance_variable_get(:@service_type)
+      self.origin_city         = tracking.instance_variable_get(:@origin_city)
+      self.origin_state        = tracking.instance_variable_get(:@origin_state)
+      self.origin_country      = tracking.instance_variable_get(:@origin_country)
+      self.destination_city    = tracking.instance_variable_get(:@destination_city)
+      self.destination_state   = tracking.instance_variable_get(:@destination_state )
+      self.destination_country = tracking.instance_variable_get(:@destination_country)
       self.last_checked_at     = Time.now
-      self.delivery_at         = tracking.delivery_at if tracking.respond_to?(:delivery_at)
+      self.delivery_at         = tracking.instance_variable_get(:@delivery_at)
     
       tracking.events.each do |event|
         e = self.events.find_or_initialize_by_name(event.name)
         if e.new_record?
           e.name        = event.name
-          e.code        = event.status
+          e.code        = event.type
           e.city        = event.city
           e.state       = event.state
           e.postal_code = event.postal_code
@@ -88,6 +91,10 @@ class Shipment < ActiveRecord::Base
     self.events.where('notified_at is null').each do |event|
       event.update_attribute(:notified_at, Time.now)
     end
+  end
+  
+  def tracking_info
+    self.shipping_service.track(:tracking_number => tracking_number)
   end
   
   def shipping_service
