@@ -7,10 +7,11 @@ module ShipmentsHelper
     [shipment.origin_city.titleize, shipment.origin_state].join(", ")
   end
   
-  def pretty_status(shipment)
-    e = shipment.events.last
-    
-    case e.status
+  def pretty_status(shipment, event)
+    event ||= shipment.events.last
+    case event.status
+      when :entered
+        "Shipment was entered into the system"
       when :received
         "Package was received in #{event.city.titlize}, #{event.state}"
       when :arrived
@@ -31,8 +32,8 @@ module ShipmentsHelper
         "Package is being transferred to the USPS"
       when :transferred_to_usps
         "Package has been transferred to USPS"
-      when :unknown 
-        event.name.titleize
+      else
+        event.name
     end   
   end
 end
