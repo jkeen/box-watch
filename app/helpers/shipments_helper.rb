@@ -13,7 +13,7 @@ module ShipmentsHelper
       when :entered
         "Shipment was entered into the system"
       when :received
-        "Package was received in #{event.city.titlize}, #{event.state}"
+        "Package was received in #{event.city.titleize}, #{event.state}"
       when :arrived
         "Package has arrived in #{event.city.titleize}, #{event.state}"
       when :departed
