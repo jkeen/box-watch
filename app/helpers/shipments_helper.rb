@@ -1,10 +1,10 @@
 module ShipmentsHelper  
   def pretty_destination(shipment)
-    [shipment.destination_city.titleize, shipment.destination_state].join(", ")    
+    [shipment.destination_city.try(:titleize), shipment.destination_state.try(:titleize)].join(", ")    
   end
   
   def pretty_origin(shipment)
-    [shipment.origin_city.titleize, shipment.origin_state].join(", ")
+    [shipment.origin_city.try(:titleize), shipment.origin_state.try(:titleize)].join(", ")
   end
   
   def pretty_status(shipment, event)
@@ -13,11 +13,11 @@ module ShipmentsHelper
       when :entered
         "Shipment was entered into the system"
       when :received
-        "Package was received in #{event.city.titleize}, #{event.state}"
+        "Package was received in #{event.city.try(:titleize)}, #{event.state}"
       when :arrived
-        "Package has arrived in #{event.city.titleize}, #{event.state}"
+        "Package has arrived in #{event.city.try(:titleize)}, #{event.state}"
       when :departed
-        "Package has left facility in #{event.city.titleize}, #{event.state}"
+        "Package has left facility in #{event.city.try(:titleize)}, #{event.state}"
       when :out_for_delivery
         "Package is out for delivery"
       when :pick_up
