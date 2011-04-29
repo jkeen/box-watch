@@ -7,3 +7,4 @@ config/settings
 config/deploy.rb
 config/database.yml
 tmp/**/*
+tmp/

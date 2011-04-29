@@ -44,7 +44,7 @@ class Shipment < ActiveRecord::Base
     if (tracking.valid?)
       # this instance_variable_get stuff below is pretty wacky, but it's due to some craziness 
       # with the proxy patterned shippinglogic that I can't seem to track down
-      
+    
       self.service_type        = tracking.instance_variable_get(:@service_type)
       self.origin_city         = tracking.instance_variable_get(:@origin_city)
       self.origin_state        = tracking.instance_variable_get(:@origin_state)
@@ -54,7 +54,7 @@ class Shipment < ActiveRecord::Base
       self.destination_country = tracking.instance_variable_get(:@destination_country)
       self.last_checked_at     = Time.now
       self.delivery_at         = tracking.instance_variable_get(:@delivery_at)
-    
+  
       tracking.events.each do |event|
         e = self.events.find_or_initialize_by_name(event.name)
         if e.new_record?
@@ -73,17 +73,22 @@ class Shipment < ActiveRecord::Base
       save
     else
       self.update_attributes(:last_error => tracking.response)
-      
+    
       if tracking.errors =~ /Invalid tracking number/
         logger.info "Tracking number #{tracking_number} invalid for #{carrier}"
       else
         logger.info "Error while trying to get tracking information: #{tracking.errors}"
       end
     end
-    rescue Exception => e
-      logger.info e.message
-      logger.info e.backtrace.join("\n")
-      return false
+  rescue Shippinglogic::FedEx::Error => e
+    logger.error "REQUEST"
+    logger.error e.request.inspect
+
+    logger.error "RESPONSE"
+    logger.error e.response.inspect                 
+  rescue Exception => e
+    logger.info e.message
+    logger.info e.backtrace.join("\n")
   end
   
   def notify_user

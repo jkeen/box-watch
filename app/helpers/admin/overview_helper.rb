@@ -1,9 +1,7 @@
 module Admin::OverviewHelper
   def highlighted_body(mail)
-    shipments = mail.shipments
-    tracking_numbers = shipments.collect { |s| s.tracking_number }
-
-    highlight(mail.body, tracking_numbers, :highlighter => '<mark>\1</mark>')
+    tracking_numbers = TrackingNumber.search(mail.body)
+    highlight(mail.body, tracking_numbers.collect { |s| s.original_number }, :highlighter => '<mark>\1</mark>')
   end
   
   def body(mail)

@@ -3,7 +3,7 @@ class Admin::OverviewController < ApplicationController
   helper :shipments
   
   def index
-    @mails = IncomingMail.all
+    @mails = IncomingMail.all(:include => [:shipments])
   end
   
   def show

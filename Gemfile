@@ -10,9 +10,9 @@ gem 'rufus-scheduler'
 gem 'settingslogic'
 gem 'mail'
 gem 'delayed_job'
-gem 'tracking_number'
-gem 'shippinglogic', :git => "https://github.com/jkeen/shippinglogic.git"
-# gem 'shippinglogic', :path => "~/Projects/shippinglogic"
+gem 'tracking_number', :git => "https://github.com/jkeen/tracking_number.git"
+gem 'shippinglogic', :git => "https://github.com/dazl/shippinglogic.git"
+# gem 'shippinglogic', :path => "~/src/shippinglogic"
 
 group :production do
   gem 'mysql'
