@@ -1,0 +1,11 @@
+defaults: &defaults
+  secret: "<%= ENV['CLOUDMAILIN_SECRET'] %>"
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+

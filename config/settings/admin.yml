@@ -1,0 +1,9 @@
+defaults: &defaults
+  username: "<%= ENV['ADMIN_USERNAME']  %>"
+  password: "<%= ENV['ADMIN_PASSWORD']  %>"
+development:
+  <<: *defaults
+test:
+  <<: *defaults
+production:
+  <<: *defaults

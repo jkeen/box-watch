@@ -1,0 +1,14 @@
+defaults: &defaults
+  address:  "<%= ENV['MAIL_ADDRESS']  %>"
+  port: "<%= ENV['MAIL_PORT'] %>"
+  domain: "<%=  ENV['MAIL_DOMAIN'] %>"
+  user_name: "<%= ENV['MAIL_USER'] %>"
+  password: "<%= ENV['MAIL_PASSWORD'] %>"
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

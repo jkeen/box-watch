@@ -1,9 +1,9 @@
 .bundle
 .DS_Store
 Capfile
+dev_environment.rb
 db/*.sqlite3
 log/*.log
-config/settings
 config/deploy.rb
 config/database.yml
 tmp/**/*
