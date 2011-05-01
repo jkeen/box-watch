@@ -7,7 +7,7 @@ module ShipmentsHelper
     [shipment.origin_city.try(:titleize), shipment.origin_state.try(:titleize)].join(", ")
   end
   
-  def pretty_status(shipment, event)
+  def pretty_status(shipment, event = nil)
     event ||= shipment.events.last
     case event.status
       when :entered
