@@ -1,18 +1,18 @@
 defaults: &defaults
   fedex:
-    key:  "<%= ENV['FEDEX_KEY'] %>"
-    password: "<%= ENV['FEDEX_PASSWORD'] %>"
-    account: "<%= ENV['FEDEX_ACCOUNT'] %>"
-    meter: "<%= ENV['FEDEX_METER'] %>"
+    key:  <%= ENV['FEDEX_KEY'] %>
+    password: <%= ENV['FEDEX_PASSWORD'] %>
+    account: <%= ENV['FEDEX_ACCOUNT'] %>
+    meter: <%= ENV['FEDEX_METER'] %>
     test: false
   ups:
-    key: "<%= ENV['UPS_KEY']  %>"
-    account:"<%=  ENV['UPS_ACCOUNT']  %>"
-    password: "<%= ENV['UPS_PASSWORD'] %>"
+    key: <%= ENV['UPS_KEY']  %>
+    account: <%=  ENV['UPS_ACCOUNT']  %>
+    password: <%= ENV['UPS_PASSWORD'] %>
     test: false
   usps:
-    username: "<%= ENV['USPS_USERNAME'] %>"
-    password: "<%= ENV['USPS_PASSWORD'] %>"
+    username: <%= ENV['USPS_USERNAME'] %>
+    password: <%= ENV['USPS_PASSWORD'] %>
     test: false
 development:
   <<: *defaults
