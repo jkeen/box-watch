@@ -9,7 +9,7 @@ class Shipment < ActiveRecord::Base
   end
 
   scope :in_transit, lambda { where("delivery_at != ?", nil) }
-  scope :needs_update, lambda { where("last_checked_at < ? OR last_checked_at is null", 5.minutes.ago) }
+  scope :needs_update, lambda { where("last_checked_at < ? OR last_checked_at is null", 30.minutes.ago) }
   scope :user_needs_notification, lambda {
     where("id IN (SELECT shipment_id from events where events.notified_at is null)")
   }
@@ -19,9 +19,7 @@ class Shipment < ActiveRecord::Base
   end
 
   after_create do
-    # Schedule.task.in '5s' do
-      refresh!
-    # end
+    TrackWorker.perform_async(self.id)
   end
 
   def name

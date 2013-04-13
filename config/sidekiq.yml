@@ -1,0 +1,6 @@
+---
+:verbose: true
+:concurrency: 3
+:queues:
+  - [track, 7]
+  - [default, 5]

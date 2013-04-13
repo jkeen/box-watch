@@ -54,6 +54,7 @@ GEM
     celluloid (0.12.4)
       facter (>= 1.6.12)
       timers (>= 1.0.0)
+    chronic (0.9.1)
     coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -63,8 +64,6 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     connection_pool (1.0.0)
-    delayed_job (3.0.5)
-      activesupport (~> 3.0)
     eco (1.0.0)
       coffee-script
       eco-source
@@ -150,8 +149,6 @@ GEM
     redis (3.0.3)
     redis-namespace (1.2.1)
       redis (~> 3.0.0)
-    rufus-scheduler (2.0.18)
-      tzinfo (>= 0.3.23)
     sass (3.2.7)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -191,6 +188,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    whenever (0.8.2)
+      activesupport (>= 2.3.4)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -198,7 +198,6 @@ PLATFORMS
 DEPENDENCIES
   capistrano
   coffee-rails (~> 3.2.1)
-  delayed_job
   eco
   factory_girl_rails
   jquery-rails
@@ -209,10 +208,10 @@ DEPENDENCIES
   pry
   rails (= 3.2.13)
   rails-backbone
-  rufus-scheduler
   sass-rails (~> 3.2.3)
   settingslogic
   sidekiq
   sqlite3-ruby
   trackerific!
   tracking_number!
+  whenever

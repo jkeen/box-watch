@@ -6,15 +6,14 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'nokogiri'
-gem 'rufus-scheduler'
 gem 'settingslogic'
 gem 'mail'
-gem 'delayed_job'
 gem 'tracking_number', :git => "https://github.com/jkeen/tracking_number.git"
 gem 'trackerific', :git => "https://github.com/jkeen/trackerific.git"
 gem 'jquery-rails'
 gem "rails-backbone"
 gem "sidekiq"
+gem "whenever"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
