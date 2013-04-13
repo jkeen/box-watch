@@ -3,7 +3,7 @@ require 'test_helper'
 class IncomingMailTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "mail with one tracking number creates one shipment" do
-    mail = Factory.build(:incoming_mail, :body => "1Z5R89390357567127")
+    mail = FactoryGirl.build(:incoming_mail, :body => "1Z5R89390357567127")
     assert_difference "Shipment.count" do
       mail.save
     end
@@ -13,7 +13,7 @@ class IncomingMailTest < ActiveSupport::TestCase
   end
 
   test "mail with multiple tracking numbers creates multiple shipment" do
-    mail = Factory.build(:incoming_mail, :body => %Q{
+    mail = FactoryGirl.build(:incoming_mail, :body => %Q{
       1Z5R89390357567127
       000123450000000027
       986578788855

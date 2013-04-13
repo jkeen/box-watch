@@ -4,9 +4,7 @@ module ApplicationHelper
   end
   
   def body_classes
-    classes = []
-    classes << @controller.controller_name
-    
+    classes = []    
     classes.join(" ")
   end
 end

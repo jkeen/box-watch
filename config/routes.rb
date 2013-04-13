@@ -8,7 +8,7 @@ PackageTracker::Application.routes.draw do
 
     root :to => "overview#index"
   end
-
-  match 'track/:tracking_number' => 'shipments#show'
+  
+  match '/:tracking_number' => 'shipments#show'
   root :to => "shipments#new"
 end

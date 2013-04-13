@@ -1,4 +1,4 @@
-<%= form_for :shipment, @shipment, :url => {:action => "create"} do |f| %>
+<%= form_for :shipment, :url => { :action => "create" } do |f| %>
   <% if @shipment.errors.any? %>
     <ul>
       <% @shipment.errors.full_messages.each do |msg| %>

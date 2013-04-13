@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Box Watch</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tag %>
 </head>
 <body class="<%= body_classes %>">
@@ -11,7 +11,9 @@
   <h1>boxwat.ch</h1>
   <nav></nav>
 </header>
-<%= yield %>
+<div id="container">
+  
+</div>
 <footer>
   
 </footer>

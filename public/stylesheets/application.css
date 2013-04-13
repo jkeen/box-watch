@@ -88,3 +88,93 @@ body.overview .details span {
   text-align:right;
   margin-right:10px;
 }
+
+ul {
+  font-size:40px;    
+	padding:0;
+	margin:0;
+	height:3.5em;
+	clear:both;
+	display:inline-block;
+}
+
+li.letter {
+	display:inline-block;
+	height:2.2em;
+	line-height:2.3em;
+	margin:0 0 0 0;
+	padding:3px;
+	position:relative;
+	width:2em;	
+	-moz-transform-style: preserve-3d;
+	-moz-transition-property: -moz-transform:;
+	-moz-perspective:600;
+
+	/* Ensure that the card lives correctly in 3D space */
+  -webkit-transform-style: preserve-3d;
+  /* We apply this property to the card so it can smoothly flip between its sides */
+  -webkit-transition-property: -webkit-transform;
+  /* Make the animation occur over a period of 1.5 seconds */
+
+  -webkit-perspective:600;
+}
+
+li.letter:before {
+  content:"";
+  border-top:1px solid #222;
+  display:block;
+  position:relative;
+  top:49%;
+  z-index:5;
+}
+
+li.letter span {
+	padding:0 0.1em;
+	font-size:2em;
+	font-weight:bold;
+	font-family: Helvetica, sans-serif;
+	display:block;
+	position:absolute;
+	left:0;
+	height:100%;
+	top:0;
+	bottom:0;
+	right:0;
+/*	background-color:#000;*/
+
+	color:#FFF;
+	z-index:1;
+	text-transform:uppercase;
+	text-align:center;
+	border-radius:2px;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+  
+	border-top:1px solid #676767;	
+	border-right:1px solid #676767;	
+	
+  border-left:1px solid #343434;  
+
+	backface-visibility:hidden!important;
+	-moz-backface-visibility: hidden!important;
+	-webkit-backface-visibility: hidden!important;
+}
+
+li.f  {
+	-moz-transition:all 0.5s linear 0.4s;
+	-moz-transform: rotateX(1009180deg);
+
+	-webkit-transition:all 0.5s linear 0.4s;
+	-webkit-transform: rotateX(1009180deg);
+
+	transition: all 0.5s linear 0.4s;
+	transform: rotateX(1009180deg);
+}
+
+li.letter span.front {
+  -webkit-box-shadow: 2px 5px #191919;
+
+}
+li.letter span.back {
+	-webkit-transform: rotateX(180deg);
+}

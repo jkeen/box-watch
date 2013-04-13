@@ -1,8 +1,13 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
+
+require 'test/unit' 
+require 'mocha/setup'
 require 'factory_girl' 
-Factory.find_definitions
+require 'rails/test_help'
+
+# FactoryGirl.find_definitions
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
