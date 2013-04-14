@@ -1,5 +1,1 @@
-<% if @shipment.found? %>
-  <%= render :partial => "/shipments/status" %>
-<% else %>
-  Shipment information not yet available
-<% end %>
+<div data-json="<%= @shipment.to_json %>"></div>

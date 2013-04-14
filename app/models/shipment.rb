@@ -75,6 +75,10 @@ class Shipment < ActiveRecord::Base
       end
     end
 
+    unless self.events.first.city?
+      self.events.first.update_attributes(:city => tracking.origin.try(:city), :state => tracking.origin.try(:state), :country => tracking.origin.try(:country))
+    end
+
     save
   rescue Trackerific::Error => e
     self.update_attributes(:last_error => e.message)
@@ -99,7 +103,7 @@ class Shipment < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    super(:include => :events)
+    super(:methods => :found?, :include => :events)
   end
 
   private

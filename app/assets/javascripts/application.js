@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require underscore
-//= require backbone
-//= require backbone_rails_sync
-//= require backbone_datalink
+//= require underscore-min
+//= require backbone-min
+//= require backbone-marionette.min
+//= require backbone-relational
 //= require backbone/box_watch
 //= require_tree .

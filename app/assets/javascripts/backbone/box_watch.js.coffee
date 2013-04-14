@@ -9,8 +9,9 @@ window.BoxWatch =
   Collections: {}
   Routers: {}
   Views: {}
-  init: -> 
-    @app = new BoxWatch.Routers.Main()
+  init: ->
+    @shipment = new BoxWatch.Models.Shipment(JSON.parse($("[data-json]").attr("data-json")))
+    @app = new BoxWatch.Routers.Main({shipment: @shipment})
 
 $(document).ready ->
   BoxWatch.init()

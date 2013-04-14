@@ -1,1 +1,6 @@
-<%= @tracking_number %>
+<div class="locations">
+
+</div>
+
+
+<%= JSON.stringify(@debug) %>

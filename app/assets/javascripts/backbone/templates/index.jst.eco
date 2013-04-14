@@ -1,3 +1,9 @@
-<div class="search">
-  <input type="text" placeholder="Tracking Number Here" />
+<header>
+  <h1>boxwat.ch </h1>
+  <div class="search-container">
+
+  </div>
+</header>
+<div class="container">
+
 </div>
