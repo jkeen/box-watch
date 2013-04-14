@@ -23,6 +23,21 @@ describe("Shipment", function() {
       expect(shipment.events).toBeDefined();
     });
 
+    describe("updating", function() {
+      it('should not update frequently when found', function() {
+        shipment.set({'found?': true});
+        expect(shipment.pollTime).toEqual(1800000)
+      });
+
+      it("should be quick when not found", function() {
+        shipment.set({'found?': false});
+        expect(shipment.pollTime).toEqual(3000)
+      });
+
+
+    });
+
+
     describe("locations", function() {
       it("has correct count", function() {
         expect(shipment.locations.length).toEqual(4);
