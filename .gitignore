@@ -4,6 +4,7 @@ Capfile
 dev_environment.rb
 db/*.sqlite3
 log/*.log
+.env
 heroku
 config/deploy.rb
 config/database.yml

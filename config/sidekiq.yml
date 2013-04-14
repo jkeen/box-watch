@@ -3,4 +3,5 @@
 :concurrency: 3
 :queues:
   - [track, 7]
+  - [update, 5]
   - [default, 5]
