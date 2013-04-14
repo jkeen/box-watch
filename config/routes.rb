@@ -1,6 +1,6 @@
 require 'sidekiq/web'
 
-PackageTracker::Application.routes.draw do
+BoxWatch::Application.routes.draw do
   resources :incoming_mails
   resources :shipments
 
