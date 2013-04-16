@@ -1,6 +1,13 @@
 class Event < ActiveRecord::Base
   belongs_to :shipment
-  default_scope :order => "occurred_at ASC"
+  default_scope :include => :location, :order => "occurred_at ASC"
+  belongs_to :location
+
+  before_save do
+    location = Location.find_or_initialize_by_city_and_state_and_country(self.city, self.state, self.country)
+    location.save if location.new_record?
+    self.location = location
+  end
 
   def status
     self.send("#{self.shipment.service}_status".to_sym)
@@ -17,6 +24,10 @@ class Event < ActiveRecord::Base
   def silent_event?
     # Don't notify the user on every event
     [:received, :entered].include?(self.status)
+  end
+
+  def as_json(options ={})
+    super(:methods => :status)
   end
 
   private
@@ -49,7 +60,7 @@ class Event < ActiveRecord::Base
       :refused
     elsif self.name =~ /forwarded/i
       :forwarded
-    elsif self.name =~/processing complete/i
+    elsif self.name =~ /processing complete/i
       :received
     elsif self.name =~ /delivered/i
       :delivered
@@ -59,22 +70,22 @@ class Event < ActiveRecord::Base
   end
 
   def fedex_status
-    case self.name
-      when "Shipment information sent to FedEx"
+    case self.name.upcase
+      when "SHIPMENT INFORMATION SENT TO FEDEX"
         :entered
-      when "Picked up"
+      when "PICKED UP"
         :received
-      when "Arrived at FedEx location", "At local FedEx facility"
+      when "ARRIVED AT FEDEX LOCATION", "AT LOCAL FEDEX FACILITY"
         :arrived
-      when "Left FedEx origin facility", "Departed FedEx location"
+      when "LEFT FEDEX ORIGIN FACILITY", "DEPARTED FEDEX LOCATION"
         :departed
-      when "Shipment information sent to U.S. Postal Service"
+      when "SHIPMENT INFORMATION SENT TO U.S. POSTAL SERVICE"
         :transferring_to_usps
-      when "At U.S. Postal Service facility"
+      when "AT U.S. POSTAL SERVICE FACILITY"
         :transferred_to_usps
-      when "Out for delivery", "On FedEx vehicle for delivery"
+      when "OUT FOR DELIVERY", "ON FEDEX VEHICLE FOR DELIVERY"
         :out_for_delivery
-      when "Delivered"
+      when "DELIVERED"
         :delivered
       else
         :unknown
@@ -87,7 +98,7 @@ class Event < ActiveRecord::Base
     # Shipment on hold awaiting payment of duty & tax. / Released by Clearing Agency. Now in-transit for delivery.
     # Package data processed by brokerage. Waiting for clearance.
 
-    case self.name
+    case self.name.upcase
       when "BILLING INFORMATION RECEIVED"
         :entered
       when "ORIGIN SCAN"

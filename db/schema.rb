@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110110045509) do
+ActiveRecord::Schema.define(:version => 20130416033907) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -21,8 +22,8 @@ ActiveRecord::Schema.define(:version => 20110110045509) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
@@ -37,11 +38,15 @@ ActiveRecord::Schema.define(:version => 20110110045509) do
     t.string   "country"
     t.datetime "occurred_at"
     t.datetime "notified_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "event_date"
     t.string   "event_time"
+    t.integer  "location_id"
   end
+
+  add_index "events", ["name"], :name => "index_events_on_name"
+  add_index "events", ["shipment_id"], :name => "index_events_on_shipment_id"
 
   create_table "incoming_mails", :force => true do |t|
     t.string   "from"
@@ -51,9 +56,22 @@ ActiveRecord::Schema.define(:version => 20110110045509) do
     t.text     "body"
     t.datetime "sent_at"
     t.datetime "processed_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
+
+  create_table "locations", :force => true do |t|
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "postal_code"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "locations", ["city", "state", "country"], :name => "index_locations_on_city_and_state_and_country", :unique => true
 
   create_table "shipments", :force => true do |t|
     t.integer  "incoming_mail_id"
@@ -70,9 +88,11 @@ ActiveRecord::Schema.define(:version => 20110110045509) do
     t.string   "destination_country"
     t.datetime "last_checked_at"
     t.datetime "delivery_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "last_error"
   end
+
+  add_index "shipments", ["tracking_number"], :name => "index_shipments_on_tracking_number"
 
 end

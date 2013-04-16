@@ -5,7 +5,8 @@ class BoxWatch.Models.Location extends Backbone.Model
 class BoxWatch.Collections.Locations extends Backbone.Collection
   model: BoxWatch.Models.Location
   addByEvent: (event) ->
-    attrs = {city: event.get('city'), state: event.get('state'), country: event.get('country')}
+    eventLocation= event.location;
+    attrs = {city: eventLocation.get('city'), state: eventLocation.get('state'), country: eventLocation.get('country')}
     location = @findWhere(attrs);
     if location
       location.events.add(event)

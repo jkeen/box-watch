@@ -14,7 +14,7 @@ gem 'trackerific', :git => "https://github.com/jkeen/trackerific.git"
 gem 'jquery-rails'
 gem "sidekiq"
 gem "whenever"
-gem 'unicorn'
+gem 'geocoder'
 
 group :assets do
   gem 'therubyracer'
@@ -25,6 +25,7 @@ group :assets do
 end
 
 group :production do
+  gem 'unicorn'
   gem 'pg'
   gem 'activerecord-postgresql-adapter'
 end

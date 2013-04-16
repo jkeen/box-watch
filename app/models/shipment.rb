@@ -1,5 +1,7 @@
 class Shipment < ActiveRecord::Base
   has_many :events, :dependent => :destroy
+  has_many :locations, :through => :events
+
   belongs_to :incoming_mail
   serialize :last_response
   validates_presence_of :tracking_number
@@ -13,6 +15,8 @@ class Shipment < ActiveRecord::Base
   scope :user_needs_notification, lambda {
     where("id IN (SELECT shipment_id from events where events.notified_at is null)")
   }
+
+  default_scope :include => {:events => :location}, :order => ["events.occurred_at ASC"]
 
   before_create do
     self.service = TrackingNumber.new(self.tracking_number).carrier.to_s
@@ -103,7 +107,7 @@ class Shipment < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    super(:methods => :found?, :include => :events)
+    super(:methods => :found?, :include => {:events => {:methods => :status, :include => :location}})
   end
 
   private
