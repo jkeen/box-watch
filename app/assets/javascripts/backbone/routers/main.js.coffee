@@ -3,4 +3,3 @@ class BoxWatch.Routers.Main extends Backbone.Marionette.AppRouter
   routes:
     "*path": "track"
   track: ->
-    console.log("blah")

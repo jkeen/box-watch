@@ -16,7 +16,7 @@ class Shipment < ActiveRecord::Base
     where("id IN (SELECT shipment_id from events where events.notified_at is null)")
   }
 
-  default_scope :include => {:events => :location}, :order => ["events.occurred_at ASC"]
+  default_scope :include => :events, :order => ["events.occurred_at ASC"]
 
   before_create do
     self.service = TrackingNumber.new(self.tracking_number).carrier.to_s

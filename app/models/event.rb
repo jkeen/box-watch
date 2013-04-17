@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
   belongs_to :shipment
-  default_scope :include => :location, :order => "occurred_at ASC"
+  default_scope :joins => :location, :order => "occurred_at ASC"
   belongs_to :location
 
   before_save do
