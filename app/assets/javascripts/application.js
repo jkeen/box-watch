@@ -17,4 +17,5 @@
 //= require backbone-marionette.min
 //= require backbone-relational
 //= require backbone/box_watch
+//= require bootstrap.min
 //= require_tree .

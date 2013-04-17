@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   belongs_to :location
 
   before_save do
-    location = Location.find_or_initialize_by_city_and_state_and_country(self.city, self.state, self.country)
+    location = Location.find_or_initialize_by_city_and_state_and_postal_code_and_country(self.city, self.state, self.postal_code, self.country)
     location.save if location.new_record?
     self.location = location
   end

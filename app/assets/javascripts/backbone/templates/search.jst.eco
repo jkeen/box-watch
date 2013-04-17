@@ -1,3 +1,1 @@
-<div class="search">
-  <input type="text" placeholder="Tracking Number Here" value="<%= @tracking_number %>"/>
-</div>
+<input type="text" placeholder="tracking number" value="<%= @tracking_number %>"/>

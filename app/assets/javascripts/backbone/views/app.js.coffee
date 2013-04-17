@@ -1,16 +1,19 @@
 class BoxWatch.Views.App extends Backbone.Marionette.Layout
   template: JST['backbone/templates/index']
-  modelEvents:
-    "search": "load"
+  className: 'full-screen'
   regions:
     "search": ".search-container",
-    "body": ".container"
-  load: (tracking) ->
-    $.getJSON tracking, (data) =>
-        model = new BoxWatch.Models.Shipment(data)
-        @body.show(new BoxWatch.Views.Shipment({model: model}))
-    .fail ->
-      console.log("Failure")
+    "body": ".content"
+  initialize: ->
+    BoxWatch.app.vent.on("search:success", @load, this)
+    BoxWatch.app.vent.on("search:success", =>
+      $(@el).removeClass('full-screen')
+    )
+
+    BoxWatch.app.vent.on("search:failure", @load, this)
+  load: (model) ->
+    @body.show(new BoxWatch.Views.Shipment({ model: model }))
+  failure: (model) ->
+
   onRender: ->
     @search.show(new BoxWatch.Views.Search({model: @model}))
-    @body.show(new BoxWatch.Views.Shipment({model: @model}))

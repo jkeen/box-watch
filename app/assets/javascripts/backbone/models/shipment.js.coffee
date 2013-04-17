@@ -8,6 +8,7 @@ class BoxWatch.Models.Shipment extends Backbone.Model
     @poll()
 
     this.on('change:found?', @adjustPollTime)
+
   adjustPollTime: ->
      @pollTime = if @get('found?') then 1800000 else 3000
   build: ->
@@ -16,6 +17,7 @@ class BoxWatch.Models.Shipment extends Backbone.Model
       @locations.addByEvent(event)
 
   poll: ()->
+    return unless @get('tracking_number')
     @poller = window.setTimeout =>
       @fetch(update: true, success: =>
         @build()

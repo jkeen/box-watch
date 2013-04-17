@@ -10,3 +10,5 @@ config/deploy.rb
 config/database.yml
 tmp/**/*
 tmp/
+vendor/cache
+.tm_properties

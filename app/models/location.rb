@@ -8,6 +8,15 @@ class Location < ActiveRecord::Base
   after_validation :geocode
 
   def address
-    "#{city}, #{state} #{postal_code} #{country}"
+    "#{city.try(:titleize)}, #{state.try(:upcase)}, #{postal_code} #{country}"
+  end
+
+  def address=(address)
+    puts address
+  end
+
+
+  def as_json(options = {})
+    super({:method => :address})
   end
 end

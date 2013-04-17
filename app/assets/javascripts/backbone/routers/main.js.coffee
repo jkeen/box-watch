@@ -1,4 +1,6 @@
-class BoxWatch.Routers.Main extends Backbone.Router
-  initialize: (options) ->
-    view = new BoxWatch.Views.App({model: options.shipment})
-    $("body").html(view.render().el)
+class BoxWatch.Routers.Main extends Backbone.Marionette.AppRouter
+  controller: BoxWatch.Controllers.Main
+  routes:
+    "*path": "track"
+  track: ->
+    console.log("blah")

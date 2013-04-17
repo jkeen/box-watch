@@ -1,9 +1,11 @@
 <header>
-  <h1>boxwat.ch </h1>
-  <div class="search-container">
+  <div class="inner">
+    <h1>boxwat.ch</h1>
+    <div class="search-container">
 
+    </div>
   </div>
 </header>
-<div class="container">
-
+<div class="content inner">
+  asdgasdg
 </div>

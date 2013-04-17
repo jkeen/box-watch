@@ -1,6 +1,3 @@
 <div class="locations">
 
 </div>
-
-
-<%= JSON.stringify(@debug) %>
